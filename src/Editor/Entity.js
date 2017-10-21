@@ -14,9 +14,13 @@ class Entity extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
+    // https://git.io/vdbak
     if (nextProps.entityKey !== this.props.entityKey) {
-      console.log('new entity key', nextProps.entityKey);
-      console.log('old entity key', this.props.entityKey);
+      const contentState = this.props.contentState;
+      const entity = contentState.getEntity(nextProps.entityKey);
+      const { entityKey } = entity.getData();
+
+      this.setState({ entityKey });
     }
   }
 
@@ -25,7 +29,7 @@ class Entity extends Component {
   }
 
   render () {
-    return <span contentEditable={false}>entity {this.state.entityKey}</span>;
+    return <span contentEditable={false}>entity {this.state.entityKey}{this.props.children}</span>;
   }
 }
 
